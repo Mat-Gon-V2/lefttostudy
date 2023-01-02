@@ -2,6 +2,11 @@ import {useState } from "react";
 import { format } from 'date-fns'
 import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import 'bootstrap/dist/css/bootstrap.css';
+import { Col, Container, Row } from "react-bootstrap";
+import './lista.css'
 
 
 let id = 0
@@ -46,53 +51,59 @@ const Lista = () => {
     return (
         <div>
             <h1>LeftToStudy</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Nombre Materia: 
-                    <input 
-                        type='text' 
-                        name='nombre' 
-                        value={materia.nombre || ''}
-                        onChange={handleChange}  
-                        required
-                    />                        
-                    Unidades: 
-                    <input 
-                        type='number' 
-                        name="unidades"
-                        value={materia.unidades || ''} 
-                        onChange={handleChange} 
-                        required
-                    />
-                    Fecha: 
-                    <ReactDatePicker 
-                        name='fecha'
-                        value={materia.fecha || ''} 
-                        selected={materia.fecha} 
-                        onChange={date => setmateria(materia => ({...materia, fecha: date}))} 
-                        dateFormat='dd/MM/yyyy'
-                        minDate={new Date()}
-                        isClearable                       
-                        
-                    />
-                    
-                    <button type="submit">
-                        Agregar
-                    </button>
-                </label>
-            </form>
+            <Container>
+                <Row className="justify-content-md-center">
+                    <Col xs={12} md={6}>
+                        <Form onSubmit={handleSubmit}>                    
+                            <Form.Group  >
+                                <Form.Label >Nombre Materia: </Form.Label>
+                                <Form.Control 
+                                    type='text' 
+                                    name='nombre' 
+                                    value={materia.nombre || ''}
+                                    onChange={handleChange}  
+                                    required
+                                />                        
+                                <Form.Label>Unidades: </Form.Label> 
+                                <Form.Control 
+                                    type='number' 
+                                    name="unidades"
+                                    value={materia.unidades || ''} 
+                                    onChange={handleChange} 
+                                    required
+                                />
+                                <Form.Label>Fecha: </Form.Label> 
+                                <ReactDatePicker 
+                                    wrapperClassName=""
+                                    name='fecha'
+                                    value={materia.fecha || ''} 
+                                    selected={materia.fecha} 
+                                    onChange={date => setmateria(materia => ({...materia, fecha: date}))} 
+                                    dateFormat='dd/MM/yyyy'
+                                    minDate={new Date()}
+                                    isClearable   
+                                />                    
+                                <Button type="submit">
+                                    Agregar
+                                </Button>
+                            </Form.Group>
+                        </Form>
+                    </Col>
+                </Row>
+                
+            </Container>
             {listaDeMaterias.map((mat) => (    
                 <div key={mat.id}>             
                         <span>Materia: {mat.nombre}  </span>
                         <span>Unidades: {mat.unidades}  </span>
                         <span>Fecha: {format(mat.fecha, 'dd-MM-yyyy')}</span>
-                        <button 
-                            type="button" 
+                        <Button 
+                            type="Button" 
                             onClick={() => {
                                 eliminarMateria(mat.id)
                             }}
                             >Borrar
-                        </button>                      
+                        </Button>                      
                 </div>
                     
                 ))}
