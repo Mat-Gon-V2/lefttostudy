@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.css';
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import './lista.css'
 
 
@@ -50,7 +50,7 @@ const Lista = () => {
 
     return (
         <div>
-            <h1>LeftToStudy</h1>
+            <h1 className="text-center">LeftToStudy</h1>
             <Container>
                 <Row className="justify-content-md-center">
                     <Col xs={12} md={6}>
@@ -82,31 +82,40 @@ const Lista = () => {
                                     dateFormat='dd/MM/yyyy'
                                     minDate={new Date()}
                                     isClearable   
-                                />                    
-                                <Button type="submit">
-                                    Agregar
-                                </Button>
+                                /> 
+                                <div className="text-center">                   
+                                    <Button type="submit">
+                                        Agregar
+                                    </Button>
+                                </div>
                             </Form.Group>
                         </Form>
                     </Col>
                 </Row>
                 
             </Container>
-            {listaDeMaterias.map((mat) => (    
-                <div key={mat.id}>             
-                        <span>Materia: {mat.nombre}  </span>
-                        <span>Unidades: {mat.unidades}  </span>
-                        <span>Fecha: {format(mat.fecha, 'dd-MM-yyyy')}</span>
-                        <Button 
-                            type="Button" 
-                            onClick={() => {
-                                eliminarMateria(mat.id)
-                            }}
-                            >Borrar
-                        </Button>                      
-                </div>
-                    
-                ))}
+            <Container>
+                <ListGroup as="ol" numbered>
+                    {listaDeMaterias.map((mat) => (    
+                        <ListGroup.Item 
+                            key={mat.id} 
+                            className="d-flex justify-content-between align-items-start"
+                        >             
+                            <span>Materia: {mat.nombre}  </span>
+                            <span>Unidades: {mat.unidades}  </span>
+                            <span>Fecha: {format(mat.fecha, 'dd-MM-yyyy')}</span>
+                            <Button 
+                                type="Button" 
+                                onClick={() => {
+                                    eliminarMateria(mat.id)
+                                }}
+                                >Borrar
+                            </Button>                      
+                        </ListGroup.Item>                                    
+                    ))}
+                </ListGroup>
+            </Container>
+            
             
             
         </div>
